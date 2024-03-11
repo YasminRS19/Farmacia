@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro de produto{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Registrar novo produto</h1>
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">
+                Dados do produto
+            </p>
+            <div class="card-header-icon">
+                <a class="button is-danger is-outlined" href="{{ url_for('index_produtos') }}"
+                   onclick="return confirm('As alterações não serão salvas \n Continuar?')">Cancelar</a>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="content">
+                <form action="{{ url_for('produto_guardar') }}" method="POST" enctype="multipart/form-data">
+                    <div class="field">
+                        <label class="label">Nome</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nome" required>
+                        </div>
+                        <p class="help">Nome que mostra na embalagem</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descrição</label>
+                        <div class="control">
+                            <input class="input" type="text" name="descricao" required>
+                        </div>
+                        <p class="help">Breve descrição do produtos. Exemplo: contem 50ml, contem 10 comprimidos,
+                            caixa da cor branca.</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Preço de compra</label>
+                        <div class="control">
+                            <input class="input" type="number" name="preco_compra" required  size="4" min="1" max="10000">
+                        </div>
+                        <p class="help">Preço cobrado pelo fornecedor/Provedor</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Preço venda</label>
+                        <div class="control">
+                            <input class="input" type="number" name="preco_venda" required size="4" min="1" max="10000">
+                        </div>
+                        <p class="help">Preço cobrado aos clientes.</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Provedor</label>
+                        <div class="control">
+                            <div class="select is-rounded">
+                                <select name="provedor" required>
+                                    {% for p in provedores %}
+                                        <option value="{{ p.id_provedor }}"> {{ p.nome }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Substancia ativa</label>
+                        <div class="control">
+                            <input class="input" type="text" name="substancia" required>
+                        </div>
+                        <p class="help">Se desejar pode agregar mais de uma substancia ativa.
+                             Exemplo: ácido acetilsalicílico, fosfato de calcio, bicarbonato de sodio </p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tratamentos</label>
+                        <div class="control">
+                            {% for i in indicacoes %}
+                                <label class="checkbox">
+                                    <input type="checkbox" name="indicacao" value="{{ i.id_indicacao }}"
+                                           style="margin-left:2em">
+                                    {{ i.nome }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <p class="help">Selecione para que sintoma é usuado o medicamento </p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Imagem do produto</label>
+                        <div class="control">
+                            <input type="file" name="imagem" accept="image/x-png,image/gif,image/jpeg">
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="button is-link is-outlined" style="margin-top: 10px;">Registrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

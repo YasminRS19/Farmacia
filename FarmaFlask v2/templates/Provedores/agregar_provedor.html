@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro provedor{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Registrar novo provedor</h1>
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">
+                Dados do provedor
+            </p>
+            <div class="card-header-icon">
+                <a class="button is-danger is-outlined" href="{{ url_for('index_provedores') }}" onclick="return confirm('Não foi possivel fazer mudanças \n Continuar?')">Cancelar</a>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="content">
+                <form action="{{ url_for('provedor_guardar') }}" method="POST">
+                    <div class="field">
+                        <label class="label">Nome</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nome" required>
+                        </div>
+                        <p class="help">Digite o nome do fornecedor</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Farmacêutico Responsável</label>
+                        <div class="control">
+                            <input class="input" type="text" name="rfc">
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Endereço</label>
+                        <div class="control">
+                            <input class="input" type="text" name="endereco" required>
+                        </div>
+                        <p class="help">Escreva o endereço</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Telefone</label>
+                        <div class="control">
+                            <input class="input" type="text" name="telefone" required>
+                        </div>
+                        <p class="help">Escreva o telefone</p>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="button is-link is-outlined" style="margin-top: 10px;">Registrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

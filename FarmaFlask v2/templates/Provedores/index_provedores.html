@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Provedores{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Gerenciamento de provedores</h1>
+    <input class="input is-link is-rounded" type="text" placeholder="Escreva para buscar." id="search">
+    <div class="card" style="margin-top: 1em;">
+        <div class="card-header">
+            <p class="card-header-title">
+                Provedores ativos no sistema
+            </p>
+            <div class="card-header-icon"><a class="button is-primary is-outlined"
+                                             href="{{ url_for('provedor_guardar') }}">+</a></div>
+        </div>
+
+        <div class="card-content">
+            <div class="container" style="overflow-x: auto;">
+                <table class="table is-bordered pricing__table is-fullwidth" id="myTable">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Farmacêutico Responsável</th>
+                        <th>Endereço</th>
+                        <th>Telefone</th>
+                        <th>Ações</th>
+                    </tr>
+
+                    {% for p in provedores %}
+                        <tr>
+                            <td>{{ p.nome }}</td>
+                            <td>{{ p.rfc }}</td>
+                            <td>{{ p.endereco }}</td>
+                            <td>{{ p.telefone }}</td>
+                            <td><a href="{{ url_for('provedor_editar', id=p.id_provedor) }}">Editar</a>
+                                <a href="{{ url_for('provedor_eliminar', id=p.id_provedor) }}" onclick="return confirm('Tem certeza que deseja excluir o registro {{ p.nome }}?\n essas mudanças são permanentes.')">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

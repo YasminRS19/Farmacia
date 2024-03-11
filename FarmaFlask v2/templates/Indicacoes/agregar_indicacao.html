@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Registro de sintoma{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Registrar novo sintoma</h1>
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">
+                Dados do novo sintoma
+            </p>
+            <div class="card-header-icon">
+                <a class="button is-danger is-outlined" href="{{ url_for('index_indicacoes') }}" onclick="return confirm('Você perderá todas as alterações \n Continuar?')">Cancelar</a>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="content">
+                <form action="{{ url_for('indicacao_guardar') }}" method="POST">
+                    <div class="field">
+                        <label class="label">Nome</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nome" required>
+                        </div>
+                        <p class="help">Escreva o sintoma</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descrição</label>
+                        <div class="control">
+                            <input class="input" type="text" name="descricao" required>
+                        </div>
+                        <p class="help">Fale brevemente o que está sentindo</p>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="button is-link is-outlined" style="margin-top: 10px;">Registrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

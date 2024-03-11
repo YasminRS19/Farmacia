@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>{% extends 'base.html' %}
+
+{% block title %}Editar produto{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Editar {{ produto.nome }}</h1>
+    <div class="card">
+        <div class="card-header">
+            <p class="card-header-title">
+                Dados do produto
+            </p>
+            <div class="card-header-icon">
+                <a class="button is-danger is-outlined" href="{{ url_for('index_produtos') }}"
+                   onclick="return confirm('As alterações não serão salvas \n Continuar?')">Cancelar</a>
+            </div>
+        </div>
+
+        <div class="card-content">
+            <div class="content">
+                <form action="{{ url_for('produto_update', id=produto.id_produto) }}" method="POST" >
+                    <div class="field">
+                        <label class="label">Nome</label>
+                        <div class="control">
+                            <input class="input" type="text" name="nome" value="{{ produto.nome }}" required>
+                        </div>
+                        <p class="help">Nome que mostra na embalagem</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Descrição</label>
+                        <div class="control">
+                            <input class="input" type="text" name="descricao" value="{{ produto.descricao }}" required>
+                        </div>
+                        <p class="help">Breve descrição do produtos. Exemplo: contem 50ml, contem 10 comprimidos,
+                            caixa da cor branca.</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Preço de compra</label>
+                        <div class="control">
+                            <input class="input" type="text" name="preco_compra" value="{{ produto.preco_compra }}"
+                                   required size="4" min="1"
+                                   max="10000">
+                        </div>
+                        <p class="help">Preço cobrado pelo provedor</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Preço venda</label>
+                        <div class="control">
+                            <input class="input" type="text" name="preco_venda" value="{{ produto.preco_venda }}" required
+                                   size="4" min="1"
+                                   max="10000">
+                        </div>
+                        <p class="help">Preço a ser cobrado para os clientes.</p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Provedor</label>
+                        <div class="control">
+                            <div class="select is-rounded">
+                                <select name="provedor" required>
+                                    <option value="{{ produto.id_provedor }}"> {{ produto.id_provedor }} </option>
+                                    {% for p in provedores %}
+                                        <option value="{{ p.id_provedor }}"> {{ p.nome }} </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Substancia ativa</label>
+                        <div class="control">
+                            <input class="input" type="text" name="substancia" value="{{ substancias }}" required>
+                        </div>
+                        <p class="help">Se desejar pode agregar mais de uma substancia ativa.
+                             Exemplo: ácido acetilsalicílico, fosfato de calcio, bicarbonato de sodio </p>
+                    </div>
+
+                    <div class="field">
+                        <label class="label">Tratamentos</label>
+                        <div class="control">
+                            {% for i in indicacoes %}
+                                <label class="checkbox">
+                                    <input type="checkbox" name="indicacao" value="{{ i.id_indicacao }}"
+                                           style="margin-left:2em" {% if i.nome in produto.indicacoes %}checked{% endif %}>
+                                    {{ i.nome }}
+                                </label>
+                            {% endfor %}
+                        </div>
+                        <p class="help">Selecione as doenças ou sintomas em que devem ser usado o medicamento </p>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="button is-link is-outlined" style="margin-top: 10px;">Registrar
+                        </button>
+                    </div>
+                <input type="hidden" name="filename" value="{{ produto.imagem }}">
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}Sintomas{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Gerenciamento de sintomas</h1>
+    <input class="input is-link is-rounded" type="text" placeholder="Escreva para buscar." id="search">
+    <div class="card" style="margin-top: 1em;">
+        <div class="card-header">
+            <p class="card-header-title">
+                Sintomas registrados
+            </p>
+            <div class="card-header-icon"><a class="button is-primary is-outlined"
+                                             href="{{ url_for('indicacao_guardar') }}">+</a></div>
+        </div>
+
+        <div class="card-content">
+            <div class="container" style="overflow-x: auto;">
+                <table class="table is-bordered pricing__table is-fullwidth" id="myTable">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Ação</th>
+                    </tr>
+
+                    {% for i in indicacoes %}
+                        <tr>
+                            <td>{{ i.nome }}</td>
+                            <td>{{ i.descricao }}</td>
+                            <td><a href="{{ url_for('indicacao_editar', id=i.id_indicacao) }}">Editar</a>
+                                <a href="{{ url_for('indicacao_eliminar', id=i.id_indicacao) }}"
+                                   onclick="return confirm('Tem certeza que deseja apagar o registro {{ i.nome }}?\n essas mudanças serão permanentes.')">Excluir</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

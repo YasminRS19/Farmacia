@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% block title %}Produtos{% endblock %}
+
+{% block content %}
+    <h1 class="title is-4">Gerenciamento de produtos</h1>
+
+    <input class="input is-link is-rounded" type="text" placeholder="Escreva para buscar." id="search">
+    <div class="card" style="margin-top: 1em;">
+        <div class="card-header">
+            <p class="card-header-title">
+                Produtos ativos no sistema
+            </p>
+            <div class="card-header-icon">
+                <a class="button is-primary is-outlined"
+                   href="{{ url_for('produto_guardar') }}">+</a></div>
+        </div>
+
+        <div class="card-content">
+            <div class="container" style="overflow-x: auto;">
+                <table class="table is-bordered pricing__table is-fullwidth is-hoverable" id="myTable">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Imagem</th>
+                        <th>Valor</th>
+                        <th>Substancias</th>
+                        <th>Indicacões médicas</th>
+                        <th>Ação</th>
+                    </tr>
+
+                    {% for p in produtos %}
+                        <tr>
+                            <td>{{ p.nome }}</td>
+                                 {% if p.imagem is not none %}
+                                     <td><img style="width: 100px; height: 100px;" src='{{ url_for('static', filename='product_images/' + p.imagem) }}'></td>
+                                 {% else %}
+                                     <td>Imagem indisponível</td>
+                                 {% endif %}
+                            <td>{{ p.preco_venda }}</td>
+                            <td>{{ p.substancias }}
+                            <td>{% for e in p.indicacoes %}
+                                <p class="button is-rounded is-danger is-light is-static">{{ e.nome }}</p> {% endfor %}</td>
+                            <td>
+
+                                <a href="{{ url_for('produto_update', id=p.id_produto) }}">Modificar</a> |
+                                <a href="{{ url_for('produto_remove', id=p.id_produto) }}"
+                                   onclick="return confirm('Tem certeza que deseja excluir o registro? {{ p.nome }}?\n Essas mudanças são permanentes')">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
